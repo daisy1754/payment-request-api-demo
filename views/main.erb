@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='UTF-8' />
+    <title>Payment Request API Demo</title>
+  </head>
+<body style="padding: 10px">
+
+  <h4>Payment Request API demo</h4>
+  <div id="checkout" style="display:none;">
+    <button>Checkout</button>
+  </div>
+  <div id="result">
+  
+  </div>
+  <div id="not_supported_error" style="display:none;">
+    Payment request API is not supported on this browser
+  </div>
+
+  <p id="canMakePayment">
+    Wait until we determine the eligibility...
+  </p>
+
+  <script src="paymentrequest.js" type="text/javascript"></script>
+  <script>
+    if(window.PaymentRequest) {
+      document.getElementById("checkout").addEventListener("click", requestPayment);
+    } else {
+      document.getElementById("checkout").style.display = 'none';
+      document.getElementById("not_supported_error").style.display = 'block';
+    }
+    const statusText = document.getElementById("canMakePayment");
+    canMakePaymentPromise().then((result) => {
+      document.getElementById("checkout").style.display = 'block';
+      if (!result) {
+        statusText.innerText = "User does not have supported payment method on browser";
+        return;
+      }
+      statusText.innerText = "User has supported payment method";
+    })
+    .catch((err) => {
+      statusText.innerText = "Error while checking if user has a supported payment method. See console for details";
+      console.log(err);
+    });
+  </script>
+</body>
+</html>
