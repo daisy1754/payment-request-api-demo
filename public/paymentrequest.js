@@ -6,8 +6,24 @@ const creditCardPaymentMethod = {
     supportedNetworks: ['visa', 'mastercard', 'amex']
   },
 };
+const googlePayData = {
+  apiVersion: 1,
+  environment: 'TEST',
+  merchantId: '01234567890123456789',
+  allowedPaymentMethods: ['CARD', 'TOKENIZED_CARD'],
+    paymentMethodTokenizationParameters: {
+      tokenizationType: 'DIRECT',
+      parameters: {
+        publicKey: 'thisispubkey'
+      }
+    },
+  cardRequirements: {
+    allowedCardNetworks: ['AMEX', 'DISCOVER', 'MASTERCARD', 'VISA']
+  }
+};
+const googlePayMethod = {supportedMethods: 'https://google.com/pay', data: googlePayData};
 
-const supportedPaymentMethods = [creditCardPaymentMethod];
+const supportedPaymentMethods = [creditCardPaymentMethod, googlePayMethod];
 
 const subtotal = {
   label: 'Subtotal',
